@@ -3,6 +3,7 @@ import java.util.List;
 
 public class MapColoringProblem extends Problem {
     private int[][] map;
+    private ArrayList<Integer> actions;
 
     public MapColoringProblem() {
         initializeProblem();
@@ -10,13 +11,12 @@ public class MapColoringProblem extends Problem {
 
     @Override
     public ArrayList<Integer> actions(State state) {
-        ArrayList<Integer> actions = new ArrayList<>();
         return actions;
     }
 
     @Override
     public State nextState(State state, int action) {
-        if (action <= 10) {
+        if (action <= 10 && action >= 0) {
             int[] colors = ((MapColorState) state).getColors();
             colors[action] = (colors[action]++) % 3;
             return new MapColorState(colors);
@@ -37,8 +37,26 @@ public class MapColoringProblem extends Problem {
     }
 
     @Override
-    public double h(State state) {
-        return 0;
+    public double objectiveFunction(State state) {
+        int count = 0;
+        int[] colors = ((MapColorState) state).getColors();
+        for (int i = 0; i < 11; i++) {
+            for (Integer neighbor : neighbors(i)) {
+                if (colors[i] == colors[neighbor]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    private ArrayList<Integer> neighbors(int node) {
+        ArrayList<Integer> neighbors = new ArrayList<>();
+        for (int i = 0; i < map[node].length; i++) {
+            if (map[node][i] == 1)
+                neighbors.add(i);
+        }
+        return neighbors;
     }
 
     private void initializeProblem() {
@@ -56,5 +74,9 @@ public class MapColoringProblem extends Problem {
                 {0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
                 {1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0}
         };
+        actions = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            actions.add(i);
+        }
     }
 }

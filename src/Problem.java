@@ -24,13 +24,15 @@ public abstract class Problem {
 
     /**
      * heuristic function
-     * you should override it based on your problem to use AStar search
      */
     public double h(State state){
         return 0;
     }
 
-    public double f(){
+    /**
+     * objective function
+     */
+    public double objectiveFunction(State state){
         return 0;
     }
 }
