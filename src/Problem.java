@@ -23,16 +23,9 @@ public abstract class Problem {
     abstract public double pathCost(List<Integer> path);
 
     /**
-     * heuristic function
+     * heuristic function/objective function
      */
     public double h(State state){
-        return 0;
-    }
-
-    /**
-     * objective function
-     */
-    public double objectiveFunction(State state){
         return 0;
     }
 }

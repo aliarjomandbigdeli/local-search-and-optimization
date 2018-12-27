@@ -3,7 +3,7 @@ import java.util.List;
 
 public class MapColoringProblem extends Problem {
     private int[][] map;
-    private ArrayList<Integer> actions;
+//    private ArrayList<Integer> actions;
 
     public MapColoringProblem() {
         initializeProblem();
@@ -11,15 +11,27 @@ public class MapColoringProblem extends Problem {
 
     @Override
     public ArrayList<Integer> actions(State state) {
+        ArrayList<Integer> actions = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            if (state.act != i)
+                actions.add(i);
+        }
         return actions;
     }
 
     @Override
     public State nextState(State state, int action) {
+        int[] colors = new int[11];
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = ((MapColorState) state).getColors()[i];
+        }
         if (action <= 10 && action >= 0) {
-            int[] colors = ((MapColorState) state).getColors();
-            colors[action] = (colors[action]++) % 3;
-            return new MapColorState(colors);
+//            colors = ((MapColorState) state).getColors();
+            colors[action] = (colors[action] + 1) % 3;
+            MapColorState nextState = new MapColorState(colors);
+            nextState.parent = state;
+            nextState.act = action;
+            return nextState;
         } else {
             System.out.println("wrong action");
             return null;
@@ -37,7 +49,7 @@ public class MapColoringProblem extends Problem {
     }
 
     @Override
-    public double objectiveFunction(State state) {
+    public double h(State state) {
         int count = 0;
         int[] colors = ((MapColorState) state).getColors();
         for (int i = 0; i < 11; i++) {
@@ -74,9 +86,5 @@ public class MapColoringProblem extends Problem {
                 {0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
                 {1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0}
         };
-        actions = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            actions.add(i);
-        }
     }
 }
