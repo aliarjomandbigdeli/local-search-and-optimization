@@ -7,8 +7,8 @@ import java.util.Comparator;
  * @since 12.27.2018
  */
 public class SearchHillClimbing extends Search {
-    public SearchHillClimbing(boolean isGraph) {
-        super(isGraph);
+    public SearchHillClimbing(Problem problem) {
+        super(problem);
     }
 
     @Override
@@ -23,23 +23,24 @@ public class SearchHillClimbing extends Search {
         int count = 0;
         State previousState = new MapColorState(new int[]{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
         while (true) {
-            State s = f.remove();
+            State current = f.remove();
             f.clear();
-            if (problem.h(s) == problem.h(previousState)) {
-                answer = s;
-                State temp = s;
+            if (problem.h(current) == problem.h(previousState)) {
+                answer = current;
+                State temp = current;
                 while (temp != null) {
                     path.add(temp.act);
                     temp = temp.parent;
                 }
                 return;
             }
-            for (Integer action : problem.actions(s)) {
+            for (Integer action : problem.actions(current)) {
                 nodeSeen++;
 
-                f.add(problem.nextState(s, action));
+                f.add(problem.nextState(current, action));
 
             }
+            nodeExpand++;
 
             f.sort(new Comparator<State>() {
                 @Override
@@ -47,7 +48,7 @@ public class SearchHillClimbing extends Search {
                     return ((Double) problem.h(s1)).compareTo(problem.h(s2));
                 }
             });
-            previousState = s;
+            previousState = current;
             count++;
         }
     }

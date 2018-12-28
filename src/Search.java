@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+
 /**
  * this class is the parent of all searches you want to define with this interface
  *
@@ -15,21 +16,17 @@ public abstract class Search {
     protected State answer;
 
     protected Problem problem;
-    protected boolean isGraph;
     protected LinkedList<State> f;   //frontier list
-    protected LinkedList<State> e;   //expand list
 
 
-    public Search(boolean isGraph) {
-        this.isGraph = isGraph;
+    public Search(Problem problem) {
+        this.problem = problem;
         nodeSeen = 0;
         nodeExpand = 0;
         path = new LinkedList<>();
         pathCost = 0;
         maxMemoryUse = 0;
         f = new LinkedList<>();
-        if (isGraph)
-            e = new LinkedList<>();
     }
 
     public int getNodeSeen() {
@@ -50,10 +47,6 @@ public abstract class Search {
 
     public LinkedList<Integer> getPath() {
         return path;
-    }
-
-    public void setProblem(Problem problem) {
-        this.problem = problem;
     }
 
     public Problem getProblem() {

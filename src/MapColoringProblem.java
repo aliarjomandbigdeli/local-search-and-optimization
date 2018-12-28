@@ -13,7 +13,7 @@ public class MapColoringProblem extends Problem {
     public ArrayList<Integer> actions(State state) {
         ArrayList<Integer> actions = new ArrayList<>();
         for (int i = 0; i < 11; i++) {
-            if (state.act != i)
+//            if (state.act != i)
                 actions.add(i);
         }
         return actions;
