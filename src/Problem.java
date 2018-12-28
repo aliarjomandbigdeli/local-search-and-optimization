@@ -14,6 +14,10 @@ public abstract class Problem {
         return initialState;
     }
 
+    public void setInitialState(State initialState) {
+        this.initialState = initialState;
+    }
+
     abstract public ArrayList<Integer> actions(State state);
 
     abstract public State nextState(State state, int action);

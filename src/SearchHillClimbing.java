@@ -21,11 +21,12 @@ public class SearchHillClimbing extends Search {
     @Override
     public void search() {
         int count = 0;
-        State previousState = new MapColorState(new int[]{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
+        State current = problem.getInitialState();
+        State previousState = current;
         while (true) {
-            State current = f.remove();
+            current = f.remove();
             f.clear();
-            if (problem.h(current) == problem.h(previousState)) {
+            if (problem.h(current) == problem.h(previousState) && count > 0) {
                 answer = current;
                 State temp = current;
                 while (temp != null) {

@@ -5,8 +5,9 @@ public class Run {
 
         Problem problem = new MapColoringProblem();
 //        Search search = new SearchHillClimbing(problem);
+        Search search = new SearchRandomRestartHillClimbing(problem,20);
 //        Search search = new SearchStochasticHillClimbing(problem);
-        Search search = new SearchFirstChoiceHillClimbing(problem);
+//        Search search = new SearchFirstChoiceHillClimbing(problem);
 //        Search search = new SimulatedAnnealing(problem);
         search.execute();
         System.out.print("path: ");
