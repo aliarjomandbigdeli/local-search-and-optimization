@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -9,7 +8,6 @@ public class GeneticAlgorithm {
     private int tornumentSize;
     private LinkedList<State> parents;
     private double mutationRate;
-    private int numberOfGenomes;
     private int numberOfGenerations;
     private State answer;
 
@@ -24,6 +22,10 @@ public class GeneticAlgorithm {
 
     public State getAnswer() {
         return answer;
+    }
+
+    public Problem getProblem() {
+        return problem;
     }
 
     private void initializePopulation() {
@@ -67,18 +69,28 @@ public class GeneticAlgorithm {
         for (int i = 0; i < populationSize; i++) {
             int x = random.nextInt(parents.size());
             int y = random.nextInt(parents.size());
-            while (x != y) {
+            while (x == y) {
                 y = random.nextInt(parents.size());
             }
-            newGeneration.add(problem.crossover(parents.get(x), parents.get(x)));
+            newGeneration.add(problem.crossover(parents.get(x), parents.get(y)));
         }
         return newGeneration;
     }
 
+//    private LinkedList<State> mutation(LinkedList<State> generation) {
+//        int mutatedGenomes = ((Double) (populationSize * problem.getNumberOfGenomes() * mutationRate)).intValue();
+//        for (State state : generation) {
+//            problem.mutation(state, mutatedGenomes);
+//        }
+//        return generation;
+//    }
+
     private LinkedList<State> mutation(LinkedList<State> generation) {
+        Random random = new Random();
         int mutatedGenomes = ((Double) (populationSize * problem.getNumberOfGenomes() * mutationRate)).intValue();
-        for (State state : generation) {
-            problem.mutation(state, mutatedGenomes);
+        for (int i = 0; i < mutatedGenomes; i++) {
+            problem.mutation(generation.get(random.nextInt(generation.size())),
+                    random.nextInt(problem.getNumberOfGenomes()));
         }
         return generation;
     }

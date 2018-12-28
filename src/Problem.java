@@ -61,7 +61,7 @@ public abstract class Problem {
         return 0;
     }
 
-    public State mutation(State state, int muatatedGenomes){
+    public State mutation(State state, int index){
         return null;
     }
 }

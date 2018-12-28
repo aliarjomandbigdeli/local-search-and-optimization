@@ -1,32 +1,98 @@
+import java.util.Scanner;
 
 public class Run {
 
     public static void main(String[] args) {
-
         Problem problem = new MapColoringProblem();
-//        Search search = new SearchHillClimbing(problem);
-        Search search = new SearchRandomRestartHillClimbing(problem,20);
-//        Search search = new SearchStochasticHillClimbing(problem);
-//        Search search = new SearchFirstChoiceHillClimbing(problem);
-//        Search search = new SimulatedAnnealing(problem);
-        search.execute();
+        Search search = new SearchHillClimbing(problem);
+        GeneticAlgorithm geneticAlgorithm;
+        System.out.println("Local Search, optimization Algorithms: ");
+        System.out.println("1. Hill Climbing \n2. Stochastic Hill Climbing\n3. First Choice Hill Climbing\n" +
+                "4. Random Restart Hill Climbing\n5. Simulated Annealing\n6. Genetic Algorithm");
+        System.out.print("please choose your algorithm number: ");
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 1:
+                search = new SearchHillClimbing(problem);
+                break;
+            case 2:
+                search = new SearchStochasticHillClimbing(problem);
+                break;
+            case 3:
+                search = new SearchFirstChoiceHillClimbing(problem);
+                break;
+            case 4:
+                System.out.print("please enter the number of iteration: ");
+                int num = scanner.nextInt();
+                search = new SearchRandomRestartHillClimbing(problem, num);
+                break;
+            case 5:
+                search = new SimulatedAnnealing(problem);
+                break;
+            case 6:
+                geneticAlgorithm = new GeneticAlgorithm(problem, 1000
+                        , 5, 0.01, 500);
+//                System.out.print("please enter the population size: ");
+//                int populationSize = scanner.nextInt();
+//                System.out.print("please enter the tornument size: ");
+//                int tornumentSize = scanner.nextInt();
+//                System.out.print("please enter the mutation rate: ");
+//                double mutationRate = scanner.nextDouble();
+//                System.out.print("please enter the number of generations: ");
+//                int numberOfGenerations = scanner.nextInt();
+//                geneticAlgorithm = new GeneticAlgorithm(problem, populationSize
+//                        , tornumentSize, mutationRate, numberOfGenerations);
+                showResultOfGeneticAlgorithm(geneticAlgorithm);
+                break;
+            default:
+                search = new SearchHillClimbing(problem);
+                break;
+        }
+        if (choice != 6) {
+            search.setNodeSize(16 + 2 * 4); //16 bytes for the header an object(parent) and two 4 bytes for two int fields
+            search.execute();
+            showResultOfSearch(search);
+        }
+
+    }
+
+    public static void showResultOfSearch(Search search) {
+        System.out.println("Result of the " + search.getClass().getSimpleName());
         System.out.print("path: ");
         for (int i = search.getPath().size() - 2; i >= 0; i--) {
             System.out.print(search.getPath().get(i) + " ");
         }
-        System.out.print("\nanswer: ");
+        System.out.println();
+        System.out.print("answer: ");
         for (int i : ((MapColorState) search.answer).getColors()) {
             System.out.print(i + " ");
         }
-        System.out.println("\nh(Number of conflict color): "+problem.h(search.answer));
+        System.out.println("\nh(Number of conflict color): " + search.problem.h(search.answer));
+        System.out.println("Depth of the result: " + (search.getPath().size() - 1));
+        System.out.println("Number of node that has been seen: " + search.getNodeSeen());
+        System.out.println("Number of node that has been expanded: " + search.getNodeExpand());
+        System.out.println("Maximum memory used: " + getSize(search.getMaxMemoryUse()));
+    }
 
-        GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(problem,100,5,0.01,500);
+    public static String getSize(long size) {
+        if (size < 1024)
+            return size + " Bytes";
+        if (size < 1024 * 1024)
+            return String.format("%.2f KB", (float) size / 1024);
+        if (size < 1024 * 1024 * 1024)
+            return String.format("%.2f MB", (float) size / (1024 * 1024));
+
+        return String.format("%.2f GB", (float) size / (1024 * 1024 * 1024));
+    }
+
+    public static void showResultOfGeneticAlgorithm(GeneticAlgorithm geneticAlgorithm) {
         geneticAlgorithm.execute();
         System.out.print("\nanswer: ");
         for (int i : ((MapColorState) geneticAlgorithm.getAnswer()).getColors()) {
             System.out.print(i + " ");
         }
-        System.out.println("\nfitness: "+problem.fitness(geneticAlgorithm.getAnswer()));
-        System.out.println("h(Number of conflict color): "+problem.h(geneticAlgorithm.getAnswer()));
+        System.out.println("\nfitness: " + geneticAlgorithm.getProblem().fitness(geneticAlgorithm.getAnswer()));
+        System.out.println("h(Number of conflict color): " + geneticAlgorithm.getProblem().h(geneticAlgorithm.getAnswer()));
     }
 }

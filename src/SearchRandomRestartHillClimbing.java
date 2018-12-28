@@ -1,11 +1,8 @@
 import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.Random;
 
 /**
- * First Choice Hill Climbing local search algorithm
- * First-choice hill climbing implements stochastic hill climbing by generating successors
- * randomly until one is generated that is better than the current state.
+ * Random Restart Hill Climbing search algorithm
  *
  * @author Ali ArjomandBigdeli
  * @since 12.28.2018

@@ -66,7 +66,7 @@ public class MapColoringProblem extends Problem {
 
     @Override
     public double fitness(State state) {
-        int count = 0;
+        double count = 0;
         int[] colors = ((MapColorState) state).getColors();
         for (int i = 0; i < n; i++) {
             for (Integer neighbor : neighbors(i)) {
@@ -136,13 +136,17 @@ public class MapColoringProblem extends Problem {
     }
 
     @Override
-    public State mutation(State state, int mutatedGenomes) {
+    public State mutation(State state, int index) {
         Random random = new Random();
-        int choice = 0;
-        for (int i = 0; i < mutatedGenomes; i++) {
-            choice = random.nextInt(n);
-            ((MapColorState) state).getColors()[choice] = random.nextInt(numberOfColor);
-        }
+        ((MapColorState) state).getColors()[index] = random.nextInt(numberOfColor);
         return state;
+//        Random random = new Random();
+//        int choice = 0;
+//        for (int i = 0; i < mutatedGenomes; i++) {
+//            choice = random.nextInt(n);
+//            ((MapColorState) state).getColors()[choice] = random.nextInt(numberOfColor);
+//        }
+//        return state;
     }
+
 }
