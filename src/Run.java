@@ -5,7 +5,8 @@ public class Run {
 
         Problem problem = new MapColoringProblem();
 //        Search search = new SearchHillClimbing(problem);
-        Search search = new SimulatedAnnealing(problem);
+        Search search = new SearchStochasticHillClimbing(problem);
+//        Search search = new SimulatedAnnealing(problem);
         search.execute();
         System.out.print("path: ");
         for (int i = search.getPath().size() - 2; i >= 0; i--) {
@@ -23,6 +24,7 @@ public class Run {
         for (int i : ((MapColorState) geneticAlgorithm.getAnswer()).getColors()) {
             System.out.print(i + " ");
         }
-        System.out.println("\nfitness(Number of conflict color): "+problem.fitness(geneticAlgorithm.getAnswer()));
+        System.out.println("\nfitness: "+problem.fitness(geneticAlgorithm.getAnswer()));
+        System.out.println("h(Number of conflict color): "+problem.h(geneticAlgorithm.getAnswer()));
     }
 }

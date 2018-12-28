@@ -36,9 +36,7 @@ public class SearchHillClimbing extends Search {
             }
             for (Integer action : problem.actions(current)) {
                 nodeSeen++;
-
                 f.add(problem.nextState(current, action));
-
             }
             nodeExpand++;
 
