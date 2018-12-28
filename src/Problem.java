@@ -29,6 +29,8 @@ public abstract class Problem {
         return 0;
     }
 
+    //######################## genetic algorithm methods ############################
+
     /**
      * fitness function
      * you should override it based on your problem to use genetic algorithm
@@ -41,6 +43,21 @@ public abstract class Problem {
      * you should override it based on your problem to use genetic algorithm
      */
     public State generateRandomState() {
+        return null;
+    }
+
+    /**
+     * you should override it based on your problem to use genetic algorithm
+     */
+    public State crossover(State parent1, State parent2) {
+        return null;
+    }
+
+    public int getNumberOfGenomes() {
+        return 0;
+    }
+
+    public State mutation(State state, int muatatedGenomes){
         return null;
     }
 }

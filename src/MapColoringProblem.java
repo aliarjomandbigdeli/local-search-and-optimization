@@ -114,4 +114,35 @@ public class MapColoringProblem extends Problem {
         }
         return new MapColorState(colors);
     }
+
+    @Override
+    public State crossover(State parent1, State parent2) {
+        int len = ((MapColorState) parent1).getColors().length;
+        Random random = new Random();
+        int crossoverPoint = random.nextInt(len);
+        int[] color = new int[len];
+        for (int i = 0; i < len; i++) {
+            if (i < crossoverPoint)
+                color[i] = ((MapColorState) parent1).getColors()[i];
+            else
+                color[i] = ((MapColorState) parent2).getColors()[i];
+        }
+        return new MapColorState(color);
+    }
+
+    @Override
+    public int getNumberOfGenomes() {
+        return n;
+    }
+
+    @Override
+    public State mutation(State state, int mutatedGenomes) {
+        Random random = new Random();
+        int choice = 0;
+        for (int i = 0; i < mutatedGenomes; i++) {
+            choice = random.nextInt(n);
+            ((MapColorState) state).getColors()[choice] = random.nextInt(numberOfColor);
+        }
+        return state;
+    }
 }

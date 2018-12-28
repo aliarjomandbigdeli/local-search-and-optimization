@@ -16,5 +16,13 @@ public class Run {
             System.out.print(i + " ");
         }
         System.out.println("\nh(Number of conflict color): "+problem.h(search.answer));
+
+        GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(problem,100,5,0.01,500);
+        geneticAlgorithm.execute();
+        System.out.print("\nanswer: ");
+        for (int i : ((MapColorState) geneticAlgorithm.getAnswer()).getColors()) {
+            System.out.print(i + " ");
+        }
+        System.out.println("\nfitness(Number of conflict color): "+problem.fitness(geneticAlgorithm.getAnswer()));
     }
 }

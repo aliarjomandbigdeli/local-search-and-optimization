@@ -9,7 +9,9 @@ public class GeneticAlgorithm {
     private int tornumentSize;
     private LinkedList<State> parents;
     private double mutationRate;
+    private int numberOfGenomes;
     private int numberOfGenerations;
+    private State answer;
 
     public GeneticAlgorithm(Problem problem, int populationSize,
                             int tornumentSize, double mutationRate, int numberOfGenerations) {
@@ -18,8 +20,10 @@ public class GeneticAlgorithm {
         this.tornumentSize = tornumentSize;
         this.mutationRate = mutationRate;
         this.numberOfGenerations = numberOfGenerations;
-        initializePopulation();
+    }
 
+    public State getAnswer() {
+        return answer;
     }
 
     private void initializePopulation() {
@@ -55,5 +59,43 @@ public class GeneticAlgorithm {
             }
         }
         return bestChoice;
+    }
+
+    private LinkedList<State> newGeneration() {
+        LinkedList<State> newGeneration = new LinkedList<>();
+        Random random = new Random();
+        for (int i = 0; i < populationSize; i++) {
+            int x = random.nextInt(parents.size());
+            int y = random.nextInt(parents.size());
+            while (x != y) {
+                y = random.nextInt(parents.size());
+            }
+            newGeneration.add(problem.crossover(parents.get(x), parents.get(x)));
+        }
+        return newGeneration;
+    }
+
+    private LinkedList<State> mutation(LinkedList<State> generation) {
+        int mutatedGenomes = ((Double) (populationSize * problem.getNumberOfGenomes() * mutationRate)).intValue();
+        for (State state : generation) {
+            problem.mutation(state, mutatedGenomes);
+        }
+        return generation;
+    }
+
+    public void execute() {
+        initializePopulation();
+        for (int i = 0; i < numberOfGenerations; i++) {
+            tornumentSelection();
+            LinkedList<State> newGeneration = newGeneration();
+            mutation(newGeneration);
+            population = newGeneration;
+        }
+        answer = population.get(0);
+        for (State state : population) {
+            if (problem.fitness(state) > problem.fitness(answer)) {
+                answer = state;
+            }
+        }
     }
 }
