@@ -25,7 +25,22 @@ public abstract class Problem {
     /**
      * heuristic function/objective function
      */
-    public double h(State state){
+    public double h(State state) {
         return 0;
+    }
+
+    /**
+     * fitness function
+     * you should override it based on your problem to use genetic algorithm
+     */
+    public double fitness(State state) {
+        return 0;
+    }
+
+    /**
+     * you should override it based on your problem to use genetic algorithm
+     */
+    public State generateRandomState() {
+        return null;
     }
 }

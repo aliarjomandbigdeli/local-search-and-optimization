@@ -1,9 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MapColoringProblem extends Problem {
     private int[][] map;
-//    private ArrayList<Integer> actions;
+    private int numberOfColor = 3;
+    private int m;  //number of edges
+    private int n;  //number of vertices
 
     public MapColoringProblem() {
         initializeProblem();
@@ -12,22 +15,21 @@ public class MapColoringProblem extends Problem {
     @Override
     public ArrayList<Integer> actions(State state) {
         ArrayList<Integer> actions = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-//            if (state.act != i)
-                actions.add(i);
+        for (int i = 0; i < n; i++) {
+            actions.add(i);
         }
         return actions;
     }
 
     @Override
     public State nextState(State state, int action) {
-        int[] colors = new int[11];
+        int[] colors = new int[n];
         for (int i = 0; i < colors.length; i++) {
             colors[i] = ((MapColorState) state).getColors()[i];
         }
-        if (action <= 10 && action >= 0) {
+        if (action < n && action >= 0) {
 //            colors = ((MapColorState) state).getColors();
-            colors[action] = (colors[action] + 1) % 3;
+            colors[action] = (colors[action] + 1) % numberOfColor;
             MapColorState nextState = new MapColorState(colors);
             nextState.parent = state;
             nextState.act = action;
@@ -52,7 +54,7 @@ public class MapColoringProblem extends Problem {
     public double h(State state) {
         int count = 0;
         int[] colors = ((MapColorState) state).getColors();
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < n; i++) {
             for (Integer neighbor : neighbors(i)) {
                 if (colors[i] == colors[neighbor]) {
                     count++;
@@ -60,6 +62,20 @@ public class MapColoringProblem extends Problem {
             }
         }
         return count;
+    }
+
+    @Override
+    public double fitness(State state) {
+        int count = 0;
+        int[] colors = ((MapColorState) state).getColors();
+        for (int i = 0; i < n; i++) {
+            for (Integer neighbor : neighbors(i)) {
+                if (colors[i] != colors[neighbor]) {
+                    count++;
+                }
+            }
+        }
+        return count / m;
     }
 
     private ArrayList<Integer> neighbors(int node) {
@@ -72,6 +88,8 @@ public class MapColoringProblem extends Problem {
     }
 
     private void initializeProblem() {
+        n = 11;
+        m = 20;
         initialState = new MapColorState(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
         map = new int[][]{
                 {0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1},
@@ -86,5 +104,14 @@ public class MapColoringProblem extends Problem {
                 {0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
                 {1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0}
         };
+    }
+
+    public State generateRandomState() {
+        Random random = new Random();
+        int[] colors = new int[n];
+        for (int i = 0; i < colors.length; i++) {
+            colors[i] = random.nextInt(numberOfColor);
+        }
+        return new MapColorState(colors);
     }
 }
