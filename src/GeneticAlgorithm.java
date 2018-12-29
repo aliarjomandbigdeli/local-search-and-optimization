@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -11,6 +12,10 @@ public class GeneticAlgorithm {
     private int numberOfGenerations;
     private State answer;
 
+    private ArrayList<Double> bestFitnessOfGenerantions;
+    private ArrayList<Double> avgFitnessOfGenerantions;
+    private ArrayList<Double> worstFitnessOfGenerantions;
+
     public GeneticAlgorithm(Problem problem, int populationSize,
                             int tornumentSize, double mutationRate, int numberOfGenerations) {
         this.problem = problem;
@@ -18,6 +23,10 @@ public class GeneticAlgorithm {
         this.tornumentSize = tornumentSize;
         this.mutationRate = mutationRate;
         this.numberOfGenerations = numberOfGenerations;
+
+        bestFitnessOfGenerantions = new ArrayList<>();
+        worstFitnessOfGenerantions = new ArrayList<>();
+        avgFitnessOfGenerantions = new ArrayList<>();
     }
 
     public State getAnswer() {
@@ -97,11 +106,13 @@ public class GeneticAlgorithm {
 
     public void execute() {
         initializePopulation();
+        calculateFitnessOfGeneration();
         for (int i = 0; i < numberOfGenerations; i++) {
             tornumentSelection();
             LinkedList<State> newGeneration = newGeneration();
             mutation(newGeneration);
             population = newGeneration;
+            calculateFitnessOfGeneration();
         }
         answer = population.get(0);
         for (State state : population) {
@@ -109,5 +120,24 @@ public class GeneticAlgorithm {
                 answer = state;
             }
         }
+    }
+
+    private void calculateFitnessOfGeneration() {
+        double best = problem.fitness(population.get(0));
+        double worst = problem.fitness(population.get(0));
+        double sum = 0;
+        double temp = 0;
+        for (State state : population) {
+            temp = problem.fitness(state);
+            if (best < temp)
+                best = temp;
+            if (worst > temp)
+                worst = temp;
+            sum += temp;
+        }
+        bestFitnessOfGenerantions.add(best);
+        worstFitnessOfGenerantions.add(worst);
+        avgFitnessOfGenerantions.add(sum / population.size());
+
     }
 }

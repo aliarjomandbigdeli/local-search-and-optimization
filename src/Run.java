@@ -31,8 +31,8 @@ public class Run {
                 search = new SimulatedAnnealing(problem);
                 break;
             case 6:
-                geneticAlgorithm = new GeneticAlgorithm(problem, 1000
-                        , 5, 0.01, 500);
+                geneticAlgorithm = new GeneticAlgorithm(problem, 100
+                        , 5, 0.01, 50);
 //                System.out.print("please enter the population size: ");
 //                int populationSize = scanner.nextInt();
 //                System.out.print("please enter the tornument size: ");
@@ -50,7 +50,7 @@ public class Run {
                 break;
         }
         if (choice != 6) {
-            search.setNodeSize(16 + 2 * 4); //16 bytes for the header an object(parent) and two 4 bytes for two int fields
+            search.setNodeSize(16 + (1 + 3) * 4); //16 bytes for the header an object(parent) and two 4 bytes for two int fields
             search.execute();
             showResultOfSearch(search);
         }

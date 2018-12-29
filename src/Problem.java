@@ -57,11 +57,16 @@ public abstract class Problem {
         return null;
     }
 
+
+    public State crossover(State parent1, State parent2, int numberOfCrosspoint) {
+        return null;
+    }
+
     public int getNumberOfGenomes() {
         return 0;
     }
 
-    public State mutation(State state, int index){
+    public State mutation(State state, int index) {
         return null;
     }
 }

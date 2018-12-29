@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class MapColoringProblem extends Problem {
     private int[][] map;
@@ -131,15 +129,43 @@ public class MapColoringProblem extends Problem {
     }
 
     @Override
-    public int getNumberOfGenomes() {
-        return n;
+    public State crossover(State parent1, State parent2, int numberOfCrossoverPoint) {
+        int len = ((MapColorState) parent1).getColors().length;
+        Random random = new Random();
+        LinkedList<Integer> crossoverPoints = new LinkedList<>();
+        for (int i = 0; i < numberOfCrossoverPoint; i++) {
+            crossoverPoints.add(random.nextInt(len));
+        }
+        crossoverPoints.sort(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        int[] color = new int[len];
+        int index = 0;
+        for (int i = 0; i < len; i++) {
+            if (i == crossoverPoints.get(index)) {
+                index++;
+            }
+            if (index % 2 == 0)
+                color[i] = ((MapColorState) parent1).getColors()[i];
+            else
+                color[i] = ((MapColorState) parent2).getColors()[i];
+        }
+        return new MapColorState(color);
     }
 
-    @Override
-    public State mutation(State state, int index) {
-        Random random = new Random();
-        ((MapColorState) state).getColors()[index] = random.nextInt(numberOfColor);
-        return state;
+        @Override
+        public int getNumberOfGenomes () {
+            return n;
+        }
+
+        @Override
+        public State mutation (State state,int index){
+            Random random = new Random();
+            ((MapColorState) state).getColors()[index] = random.nextInt(numberOfColor);
+            return state;
 //        Random random = new Random();
 //        int choice = 0;
 //        for (int i = 0; i < mutatedGenomes; i++) {
@@ -147,6 +173,6 @@ public class MapColoringProblem extends Problem {
 //            ((MapColorState) state).getColors()[choice] = random.nextInt(numberOfColor);
 //        }
 //        return state;
-    }
+        }
 
-}
+    }
