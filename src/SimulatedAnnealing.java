@@ -7,7 +7,7 @@ import java.util.Random;
  * @since 12.28.2018
  */
 public class SimulatedAnnealing extends Search {
-    int maxIteration = 2000;
+    int maxIteration = 50000;
 
     public SimulatedAnnealing(Problem problem) {
         super(problem);
@@ -32,13 +32,16 @@ public class SimulatedAnnealing extends Search {
                 Random random = new Random();
                 int choice = random.nextInt(f.size());
                 State next = f.get(choice);
-                if (problem.h(next) < problem.h(current))
+                if (problem.fitness(next) > problem.fitness(current))
                     current = next;
                 else {
-                    int rand = random.nextInt(maxIteration);
-                    if (rand < (maxIteration - count))
+                    double deltaE = problem.fitness(next) - problem.fitness(current);
+                    deltaE *= maxIteration;
+                    double probability = Math.exp(deltaE / T);
+                    int intProb = (int) Math.floor(probability * 1000);
+                    int rand = random.nextInt(1000);
+                    if (rand < intProb)
                         current = next;
-
                 }
             }
             f.clear();

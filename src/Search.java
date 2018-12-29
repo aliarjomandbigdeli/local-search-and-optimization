@@ -10,7 +10,6 @@ public abstract class Search {
     protected int nodeSeen;
     protected int nodeExpand;
     protected LinkedList<Integer> path; //action sequence
-    protected int pathCost;
     protected int maxNodeKeptInMemory;  //maximum node kept in memory at a time
     protected State answer;
 
@@ -23,7 +22,6 @@ public abstract class Search {
         nodeSeen = 0;
         nodeExpand = 0;
         path = new LinkedList<>();
-        pathCost = 0;
         maxNodeKeptInMemory = 0;
         f = new LinkedList<>();
     }

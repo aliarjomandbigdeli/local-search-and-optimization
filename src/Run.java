@@ -68,7 +68,7 @@ public class Run {
             System.out.print(i + " ");
         }
         System.out.println("\nh(Number of conflict color): " + search.problem.h(search.answer));
-        System.out.println("Depth of the result: " + (search.getPath().size() - 1));
+        System.out.println("Depth of the result: " + search.getNodeExpand());
         System.out.println("Number of node that has been seen: " + search.getNodeSeen());
         System.out.println("Number of node that has been expanded: " + search.getNodeExpand());
         System.out.println("Maximum memory used: " + search.getMaxNodeKeptInMemory());
