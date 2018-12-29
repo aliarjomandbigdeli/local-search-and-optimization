@@ -14,11 +14,6 @@ public class SimulatedAnnealing extends Search {
     }
 
     @Override
-    public void execute() {
-        search();
-    }
-
-    @Override
     public void search() {
         int count = 0;  //act like time
         int T = 0;  //temperature

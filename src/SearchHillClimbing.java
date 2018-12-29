@@ -12,11 +12,6 @@ public class SearchHillClimbing extends Search {
     }
 
     @Override
-    public void execute() {
-        search();
-    }
-
-    @Override
     public void search() {
         int count = 0;
         State current = problem.getInitialState();

@@ -18,16 +18,11 @@ public class SearchRandomRestartHillClimbing extends Search {
     }
 
     @Override
-    public void execute() {
-        search();
-    }
-
-    @Override
     public void search() {
         SearchHillClimbing hillClimbing = new SearchHillClimbing(problem);
         for (int i = 0; i < numberOfIteration; i++) {
             problem.setInitialState(problem.generateRandomState());
-            hillClimbing.execute();
+            hillClimbing.search();
             answers.add(hillClimbing.answer);
         }
         answers.sort(new Comparator<State>() {

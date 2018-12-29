@@ -50,7 +50,7 @@ public class Run {
                 break;
         }
         if (choice != 6) {
-            search.execute();
+            search.search();
             showResultOfSearch(search);
         }
 

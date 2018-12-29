@@ -46,8 +46,6 @@ public abstract class Search {
         return problem;
     }
 
-    abstract public void execute();
-
     abstract public void search();
 
     protected void createSolutionPath(State state){

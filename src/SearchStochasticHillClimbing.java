@@ -14,11 +14,6 @@ public class SearchStochasticHillClimbing extends Search {
     }
 
     @Override
-    public void execute() {
-        search();
-    }
-
-    @Override
     public void search() {
         int count = 0;
         Random random = new Random();
