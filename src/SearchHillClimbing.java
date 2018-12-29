@@ -13,9 +13,7 @@ public class SearchHillClimbing extends Search {
 
     @Override
     public void execute() {
-        f.add(problem.getInitialState());
         search();
-        maxMemoryUse = (nodeSeen - nodeExpand) * nodeSize;
     }
 
     @Override
@@ -23,17 +21,13 @@ public class SearchHillClimbing extends Search {
         int count = 0;
         State current = problem.getInitialState();
         State previousState = current;
-        while (true) {
+        f.add(problem.getInitialState());
+        nodeSeen++;
+        while (!f.isEmpty()) {
             current = f.remove();
             f.clear();
-            if (problem.h(current) == problem.h(previousState) && count > 0) {
-                answer = current;
-                State temp = current;
-                while (temp != null) {
-                    path.add(temp.act);
-                    temp = temp.parent;
-                }
-                return;
+            if (problem.h(current) >= problem.h(previousState) && count > 0) {
+                break;
             }
             for (Integer action : problem.actions(current)) {
                 nodeSeen++;
@@ -49,7 +43,11 @@ public class SearchHillClimbing extends Search {
             });
             previousState = current;
             count++;
+            maxNodeKeptInMemory = Integer.max(maxNodeKeptInMemory, f.size());
         }
+
+        answer = current;
+        createSolutionPath(current);
     }
 
 }

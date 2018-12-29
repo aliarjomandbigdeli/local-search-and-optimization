@@ -1,4 +1,5 @@
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * First Choice Hill Climbing local search algorithm
@@ -15,49 +16,43 @@ public class SearchFirstChoiceHillClimbing extends Search {
 
     @Override
     public void execute() {
-        f.add(problem.getInitialState());
         search();
-        maxMemoryUse = (nodeSeen - nodeExpand) * nodeSize;
     }
 
     @Override
     public void search() {
         int count = 0;
-        Random random = new Random();
-        State previousState = new MapColorState(new int[]{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
         State current = problem.getInitialState();
-        while (f.size() > 0) {
+        State previousState = current;
+        f.add(problem.getInitialState());
+        nodeSeen++;
+        while (!f.isEmpty()) {
             current = f.remove();
-            if (problem.h(current) == problem.h(previousState)) {
+            f.clear();
+            if (problem.h(current) >= problem.h(previousState) && count > 0) {
                 break;
             }
-
-            f.clear();
-
-            State nextState = problem.nextState(current,
-                    problem.actions(current).get(random.nextInt(problem.actions(current).size())));
-            nodeSeen++;
-            count = 0;
-            while (problem.h(nextState) < problem.h(current) && count < problem.actions(current).size()) {
-                nextState = problem.nextState(current,
-                        problem.actions(current).get(random.nextInt(problem.actions(current).size())));
+            ArrayList<Integer> actions = problem.actions(current);
+            Collections.shuffle(actions);
+            for (Integer action : actions) {
                 nodeSeen++;
-                count++;
+                State nextState = problem.nextState(current, action);
+                if (problem.h(nextState) < problem.h(current)) {
+                    f.add(nextState);
+                    break;
+                }
             }
-            f.add(nextState);
             nodeExpand++;
 
             previousState = current;
-            ;
+            count++;
+            maxNodeKeptInMemory = Integer.max(maxNodeKeptInMemory, f.size());
         }
 
         answer = current;
-        State temp = current;
-        while (temp != null) {
-            path.add(temp.act);
-            temp = temp.parent;
-        }
+        createSolutionPath(current);
     }
+
 
 }
 

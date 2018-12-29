@@ -9,10 +9,9 @@ import java.util.LinkedList;
 public abstract class Search {
     protected int nodeSeen;
     protected int nodeExpand;
-    protected LinkedList<Integer> path;
+    protected LinkedList<Integer> path; //action sequence
     protected int pathCost;
-    protected long maxMemoryUse;
-    protected long nodeSize;
+    protected int maxNodeKeptInMemory;  //maximum node kept in memory at a time
     protected State answer;
 
     protected Problem problem;
@@ -25,7 +24,7 @@ public abstract class Search {
         nodeExpand = 0;
         path = new LinkedList<>();
         pathCost = 0;
-        maxMemoryUse = 0;
+        maxNodeKeptInMemory = 0;
         f = new LinkedList<>();
     }
 
@@ -37,12 +36,8 @@ public abstract class Search {
         return nodeExpand;
     }
 
-    public long getMaxMemoryUse() {
-        return maxMemoryUse;
-    }
-
-    public void setNodeSize(long nodeSizeByte) {
-        this.nodeSize = nodeSizeByte;
+    public int getMaxNodeKeptInMemory() {
+        return maxNodeKeptInMemory;
     }
 
     public LinkedList<Integer> getPath() {
@@ -56,5 +51,13 @@ public abstract class Search {
     abstract public void execute();
 
     abstract public void search();
+
+    protected void createSolutionPath(State state){
+        State temp = state;
+        while (temp != null) {
+            path.add(temp.act);
+            temp = temp.parent;
+        }
+    }
 
 }

@@ -50,7 +50,6 @@ public class Run {
                 break;
         }
         if (choice != 6) {
-            search.setNodeSize(16 + (1 + 3) * 4); //16 bytes for the header an object(parent) and two 4 bytes for two int fields
             search.execute();
             showResultOfSearch(search);
         }
@@ -72,18 +71,7 @@ public class Run {
         System.out.println("Depth of the result: " + (search.getPath().size() - 1));
         System.out.println("Number of node that has been seen: " + search.getNodeSeen());
         System.out.println("Number of node that has been expanded: " + search.getNodeExpand());
-        System.out.println("Maximum memory used: " + getSize(search.getMaxMemoryUse()));
-    }
-
-    public static String getSize(long size) {
-        if (size < 1024)
-            return size + " Bytes";
-        if (size < 1024 * 1024)
-            return String.format("%.2f KB", (float) size / 1024);
-        if (size < 1024 * 1024 * 1024)
-            return String.format("%.2f MB", (float) size / (1024 * 1024));
-
-        return String.format("%.2f GB", (float) size / (1024 * 1024 * 1024));
+        System.out.println("Maximum memory used: " + search.getMaxNodeKeptInMemory());
     }
 
     public static void showResultOfGeneticAlgorithm(GeneticAlgorithm geneticAlgorithm) {

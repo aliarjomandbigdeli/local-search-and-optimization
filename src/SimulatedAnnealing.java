@@ -7,6 +7,7 @@ import java.util.Random;
  * @since 12.28.2018
  */
 public class SimulatedAnnealing extends Search {
+    int maxIteration = 2000;
 
     public SimulatedAnnealing(Problem problem) {
         super(problem);
@@ -14,21 +15,22 @@ public class SimulatedAnnealing extends Search {
 
     @Override
     public void execute() {
-        f.add(problem.getInitialState());
         search();
-        maxMemoryUse = (nodeSeen - nodeExpand) * nodeSize;
     }
 
     @Override
     public void search() {
-        int maxIteration = 1000;
-        int count = 0;
-        int choice = 0;
-        State current = f.remove();
-        while (count < maxIteration) {
+        int count = 0;  //act like time
+        int T = 0;  //temperature
+        State current = problem.getInitialState();
+        while (true) {
+            T = schedule(count);
+            if (T == 0) {
+                break;
+            }
             if (count > 0) {
                 Random random = new Random();
-                choice = random.nextInt(f.size());
+                int choice = random.nextInt(f.size());
                 State next = f.get(choice);
                 if (problem.h(next) < problem.h(current))
                     current = next;
@@ -43,7 +45,6 @@ public class SimulatedAnnealing extends Search {
 
             for (Integer action : problem.actions(current)) {
                 nodeSeen++;
-
                 f.add(problem.nextState(current, action));
 
             }
@@ -51,14 +52,15 @@ public class SimulatedAnnealing extends Search {
 
 
             count++;
+            maxNodeKeptInMemory = Integer.max(maxNodeKeptInMemory, f.size());
         }
 
         answer = current;
-        State temp = current;
-        while (temp != null) {
-            path.add(temp.act);
-            temp = temp.parent;
-        }
+        createSolutionPath(current);
+    }
+
+    private int schedule(int time) {
+        return maxIteration - time;
     }
 
 }

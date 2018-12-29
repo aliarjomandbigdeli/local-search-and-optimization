@@ -12,9 +12,9 @@ public class GeneticAlgorithm {
     private int numberOfGenerations;
     private State answer;
 
-    private ArrayList<Double> bestFitnessOfGenerantions;
-    private ArrayList<Double> avgFitnessOfGenerantions;
-    private ArrayList<Double> worstFitnessOfGenerantions;
+    private ArrayList<Double> bestFitnessOfGenerations;
+    private ArrayList<Double> avgFitnessOfGenerations;
+    private ArrayList<Double> worstFitnessOfGenerations;
 
     public GeneticAlgorithm(Problem problem, int populationSize,
                             int tornumentSize, double mutationRate, int numberOfGenerations) {
@@ -24,9 +24,9 @@ public class GeneticAlgorithm {
         this.mutationRate = mutationRate;
         this.numberOfGenerations = numberOfGenerations;
 
-        bestFitnessOfGenerantions = new ArrayList<>();
-        worstFitnessOfGenerantions = new ArrayList<>();
-        avgFitnessOfGenerantions = new ArrayList<>();
+        bestFitnessOfGenerations = new ArrayList<>();
+        worstFitnessOfGenerations = new ArrayList<>();
+        avgFitnessOfGenerations = new ArrayList<>();
     }
 
     public State getAnswer() {
@@ -135,9 +135,9 @@ public class GeneticAlgorithm {
                 worst = temp;
             sum += temp;
         }
-        bestFitnessOfGenerantions.add(best);
-        worstFitnessOfGenerantions.add(worst);
-        avgFitnessOfGenerantions.add(sum / population.size());
+        bestFitnessOfGenerations.add(best);
+        worstFitnessOfGenerations.add(worst);
+        avgFitnessOfGenerations.add(sum / population.size());
 
     }
 }

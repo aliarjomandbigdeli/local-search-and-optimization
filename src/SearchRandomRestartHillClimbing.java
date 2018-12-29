@@ -20,7 +20,6 @@ public class SearchRandomRestartHillClimbing extends Search {
     @Override
     public void execute() {
         search();
-        maxMemoryUse = (nodeSeen - nodeExpand) * nodeSize;
     }
 
     @Override
@@ -39,11 +38,7 @@ public class SearchRandomRestartHillClimbing extends Search {
         });
         answer = answers.peek();
         State temp = answer;
-        while (temp != null) {
-            path.add(temp.act);
-            temp = temp.parent;
-        }
-
+        createSolutionPath(temp);
     }
 
 }
