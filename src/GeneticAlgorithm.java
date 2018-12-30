@@ -10,23 +10,33 @@ public class GeneticAlgorithm {
     private LinkedList<State> parents;
     private double mutationRate;
     private int numberOfGenerations;
+    private int numberOfCrossoverPoint;
     private State answer;
 
     private ArrayList<Double> bestFitnessOfGenerations;
     private ArrayList<Double> avgFitnessOfGenerations;
     private ArrayList<Double> worstFitnessOfGenerations;
 
-    public GeneticAlgorithm(Problem problem, int populationSize,
-                            int tornumentSize, double mutationRate, int numberOfGenerations) {
+    public GeneticAlgorithm(Problem problem, int populationSize, int tornumentSize,
+                            double mutationRate, int numberOfGenerations, int numberOfCrossoverPoint) {
         this.problem = problem;
         this.populationSize = populationSize;
         this.tornumentSize = tornumentSize;
         this.mutationRate = mutationRate;
         this.numberOfGenerations = numberOfGenerations;
+        this.numberOfCrossoverPoint = numberOfCrossoverPoint;
 
         bestFitnessOfGenerations = new ArrayList<>();
         worstFitnessOfGenerations = new ArrayList<>();
         avgFitnessOfGenerations = new ArrayList<>();
+    }
+
+    public GeneticAlgorithm(Problem problem, int populationSize,
+                            int tornumentSize, double mutationRate, int numberOfGenerations) {
+        this(problem, populationSize, tornumentSize,
+                mutationRate, numberOfGenerations, 1);
+
+
     }
 
     public State getAnswer() {
@@ -81,7 +91,7 @@ public class GeneticAlgorithm {
             while (x == y) {
                 y = random.nextInt(parents.size());
             }
-            newGeneration.add(problem.crossover(parents.get(x), parents.get(y)));
+            newGeneration.add(problem.crossover(parents.get(x), parents.get(y), numberOfCrossoverPoint));
         }
         return newGeneration;
     }

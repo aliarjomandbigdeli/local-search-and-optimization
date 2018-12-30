@@ -54,11 +54,11 @@ public abstract class Problem {
      * you should override it based on your problem to use genetic algorithm
      */
     public State crossover(State parent1, State parent2) {
-        return null;
+        return crossover(parent1, parent2, 1);
     }
 
 
-    public State crossover(State parent1, State parent2, int numberOfCrosspoint) {
+    public State crossover(State parent1, State parent2, int numberOfCrossoverPoint) {
         return null;
     }
 

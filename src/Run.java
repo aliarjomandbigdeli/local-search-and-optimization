@@ -32,7 +32,7 @@ public class Run {
                 break;
             case 6:
                 geneticAlgorithm = new GeneticAlgorithm(problem, 100
-                        , 5, 0.01, 50);
+                        , 5, 0.01, 500);
 //                System.out.print("please enter the population size: ");
 //                int populationSize = scanner.nextInt();
 //                System.out.print("please enter the tornument size: ");
