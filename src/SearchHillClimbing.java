@@ -2,6 +2,10 @@ import java.util.Comparator;
 
 /**
  * Hill Climbing local search algorithm
+ * At each step the current node is replaced by the best neighbor; in this version,
+ * that means the neighbor with the lowest h(heuristic cost).
+ * <p>
+ * you can change the best neighbor ,that means the neighbor with the highest VALUE(fitness)
  *
  * @author Ali ArjomandBigdeli
  * @since 12.27.2018

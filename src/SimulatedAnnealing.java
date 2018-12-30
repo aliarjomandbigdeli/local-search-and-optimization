@@ -2,6 +2,12 @@ import java.util.Random;
 
 /**
  * Simulated Annealing algorithm
+ * The innermost loop(while loop) of the simulated-annealing algorithm is quite similar to hill climbing.
+ * Instead of picking the best move, however, it picks a random move. If the move improves the situation,
+ * it is always accepted. Otherwise, the algorithm accepts the move with some probability less than 1.
+ * The probability decreases exponentially with the “badness” of the move—the amount ΔE by which the
+ * evaluation is worsened. The probability also decreases as the “temperature” T goes down: “bad” moves
+ * are more likely to be allowed at the start when T is high, and they become more unlikely as T decreases
  *
  * @author Ali ArjomandBigdeli
  * @since 12.28.2018
@@ -57,6 +63,12 @@ public class SimulatedAnnealing extends Search {
         createSolutionPath(current);
     }
 
+    /**
+     * determines the value of the temperature T as a function of time.
+     *
+     * @param time that is number of iteration in this version
+     * @return
+     */
     private int schedule(int time) {
         return maxIteration - time;
     }

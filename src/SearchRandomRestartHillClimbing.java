@@ -3,6 +3,8 @@ import java.util.LinkedList;
 
 /**
  * Random Restart Hill Climbing search algorithm
+ * It conducts a series of hill-climbing searches from randomly generated initial states, until a goal
+ * is found. It is trivially complete with probability approaching 1.
  *
  * @author Ali ArjomandBigdeli
  * @since 12.28.2018

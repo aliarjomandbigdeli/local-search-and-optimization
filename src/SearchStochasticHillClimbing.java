@@ -2,8 +2,8 @@ import java.util.Random;
 
 /**
  * Stochastic Hill Climbing local search algorithm
- * Stochastic hill climbing chooses at random from among the uphill moves;
- * the probability of selection can vary with the steepness of the uphill move.
+ * Stochastic hill climbing chooses at random from among the uphill moves(in this implementation,
+ * the neighbor with the lowest h(heuristic cost)).
  *
  * @author Ali ArjomandBigdeli
  * @since 12.28.2018
