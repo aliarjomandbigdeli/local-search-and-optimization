@@ -1,4 +1,4 @@
-# Local searches and optimization algorithms in AI
+# Local search and optimization algorithms in AI
 In this project, I implement some of the local search and optimization algorithms are used in AI, such as:
 - Hill Climbing(simple)
 - Stochastic Hill Climbing
@@ -8,7 +8,7 @@ In this project, I implement some of the local search and optimization algorithm
 - Genetic Algorithm (GA)
 
 ## How to use
-To use these search algorithms for solving your problem, you should define your problem and its state classes that extend from Problem and State class.
+To use these algorithms for solving your problem, you should define your problem and its state classes that extend from Problem and State class.
 
 Use `MyProblem extends Problem` and `MyProblemState extends State` to achieve that.
 

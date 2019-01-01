@@ -9,6 +9,10 @@ import java.util.Random;
  * <p>
  * GA begins with a set of k randomly generated states, called the population.
  * There are lots of versions for GA implementation based on the problem
+ * <p>
+ *
+ * @author Ali ArjomandBigdeli
+ * @since 12.29.2018
  */
 public class GeneticAlgorithm {
     private Problem problem;
