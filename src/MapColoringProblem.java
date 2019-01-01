@@ -1,5 +1,12 @@
 import java.util.*;
 
+/**
+ * this class is an example of how to use this interface to solve any search problem
+ * As an example, I choose map(graph) coloring problem that each node should have a color different from its neighbors
+ *
+ * @author Ali ArjomandBigdeli
+ * @since 12.27.2018
+ */
 public class MapColoringProblem extends Problem {
     private int[][] map;
     private int numberOfColor = 3;

@@ -1,3 +1,9 @@
+/**
+ * This class is used to model the state of map(graph) coloring problem
+ *
+ * @author Ali ArjomandBigdeli
+ * @since 12.27.2018
+ */
 public class MapColorState extends State {
     private int[] colors;   //chromosome
 

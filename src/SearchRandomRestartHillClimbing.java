@@ -23,6 +23,8 @@ public class SearchRandomRestartHillClimbing extends Search {
     public void search() {
         SearchHillClimbing hillClimbing = new SearchHillClimbing(problem);
         for (int i = 0; i < numberOfIteration; i++) {
+            hillClimbing.nodeSeen = 0;
+            hillClimbing.nodeExpand = 0;
             problem.setInitialState(problem.generateRandomState());
             hillClimbing.search();
             answers.add(hillClimbing.answer);
@@ -33,6 +35,9 @@ public class SearchRandomRestartHillClimbing extends Search {
                 return ((Double) problem.h(s1)).compareTo(problem.h(s2));
             }
         });
+        nodeSeen = hillClimbing.nodeSeen;
+        nodeExpand = hillClimbing.nodeExpand;
+        maxNodeKeptInMemory = hillClimbing.maxNodeKeptInMemory;
         answer = answers.peek();
         State temp = answer;
         createSolutionPath(temp);

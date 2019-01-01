@@ -1,5 +1,11 @@
 import java.util.Scanner;
 
+/**
+ * this class is used to solve a problem by running one of the algorithms
+ *
+ * @author Ali ArjomandBigdeli
+ * @since 12.31.2018
+ */
 public class Run {
 
     public static void main(String[] args) {
@@ -31,18 +37,18 @@ public class Run {
                 search = new SimulatedAnnealing(problem);
                 break;
             case 6:
-                geneticAlgorithm = new GeneticAlgorithm(problem, 100
-                        , 5, 0.01, 500);
-//                System.out.print("please enter the population size: ");
-//                int populationSize = scanner.nextInt();
-//                System.out.print("please enter the tornument size: ");
-//                int tornumentSize = scanner.nextInt();
-//                System.out.print("please enter the mutation rate: ");
-//                double mutationRate = scanner.nextDouble();
-//                System.out.print("please enter the number of generations: ");
-//                int numberOfGenerations = scanner.nextInt();
-//                geneticAlgorithm = new GeneticAlgorithm(problem, populationSize
-//                        , tornumentSize, mutationRate, numberOfGenerations);
+                System.out.print("please enter the population size: ");
+                int populationSize = scanner.nextInt();
+                System.out.print("please enter the tournament size: ");
+                int tournamentSize = scanner.nextInt();
+                System.out.print("please enter the mutation rate: ");
+                double mutationRate = scanner.nextDouble();
+                System.out.print("please enter the number of generations: ");
+                int numberOfGenerations = scanner.nextInt();
+                System.out.print("please enter the number of crossOver point: ");
+                int numberOfCrossOverPoint = scanner.nextInt();
+                geneticAlgorithm = new GeneticAlgorithm(problem, populationSize
+                        , tournamentSize, mutationRate, numberOfGenerations, numberOfCrossOverPoint);
                 showResultOfGeneticAlgorithm(geneticAlgorithm);
                 break;
             default:
@@ -81,6 +87,17 @@ public class Run {
             System.out.print(i + " ");
         }
         System.out.println("\nfitness: " + geneticAlgorithm.getProblem().fitness(geneticAlgorithm.getAnswer()));
-        System.out.println("h(Number of conflict color): " + geneticAlgorithm.getProblem().h(geneticAlgorithm.getAnswer()));
+        System.out.println("bests: ");
+        for (Double aDouble : geneticAlgorithm.getBestFitnessOfGenerations()) {
+            System.out.print(aDouble + ", ");
+        }
+        System.out.println("\nworst: ");
+        for (Double aDouble : geneticAlgorithm.getWorstFitnessOfGenerations()) {
+            System.out.print(aDouble + ", ");
+        }
+        System.out.println("\naverage: ");
+        for (Double aDouble : geneticAlgorithm.getAvgFitnessOfGenerations()) {
+            System.out.print(aDouble + ", ");
+        }
     }
 }
