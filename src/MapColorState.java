@@ -7,7 +7,7 @@
 public class MapColorState extends State {
     private int[] colors;   //chromosome
 
-    //in this problem act is a number that which node should change its color
+    //in this problem 'act' is a number that determines which node should change its color
     public MapColorState(int[] colors) {
         this.colors = colors;
     }

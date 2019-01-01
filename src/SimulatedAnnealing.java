@@ -21,7 +21,7 @@ public class SimulatedAnnealing extends Search {
 
     @Override
     public void search() {
-        int count = 0;  //act like time
+        int count = 0;  //acts like time
         int T = 0;  //temperature
         State current = problem.getInitialState();
         while (true) {

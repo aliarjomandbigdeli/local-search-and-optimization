@@ -45,7 +45,8 @@ public abstract class Problem {
     }
 
     /**
-     * you should override it based on your problem to use genetic algorithm
+     * this method generate a new state with random initial values
+     * NOTE, you should override it based on your problem to use genetic algorithm & Random restart hill climbing
      */
     public State generateRandomState() {
         return null;

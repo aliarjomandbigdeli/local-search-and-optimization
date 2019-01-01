@@ -8,7 +8,7 @@ import java.util.*;
  * @since 12.27.2018
  */
 public class MapColoringProblem extends Problem {
-    private int[][] map;
+    private int[][] map;    //adjacency matrix
     private int numberOfColor = 3;
     private int m;  //number of edges
     private int n;  //number of vertices
@@ -33,7 +33,6 @@ public class MapColoringProblem extends Problem {
             colors[i] = ((MapColorState) state).getColors()[i];
         }
         if (action < n && action >= 0) {
-//            colors = ((MapColorState) state).getColors();
             colors[action] = (colors[action] + 1) % numberOfColor;
             MapColorState nextState = new MapColorState(colors);
             nextState.parent = state;
@@ -159,13 +158,6 @@ public class MapColoringProblem extends Problem {
         Random random = new Random();
         ((MapColorState) state).getColors()[index] = random.nextInt(numberOfColor);
         return state;
-//        Random random = new Random();
-//        int choice = 0;
-//        for (int i = 0; i < mutatedGenomes; i++) {
-//            choice = random.nextInt(n);
-//            ((MapColorState) state).getColors()[choice] = random.nextInt(numberOfColor);
-//        }
-//        return state;
     }
 
 }
